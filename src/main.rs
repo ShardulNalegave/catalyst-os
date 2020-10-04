@@ -1,4 +1,5 @@
 #![no_std]
+#![no_main]
 
 /// Utils module
 mod utils;
@@ -8,5 +9,9 @@ mod utils;
 use utils::panic::panic;
 // ===================
 
-/// Main Function
-fn main() {}
+/// # Start Function
+/// Entry-Point for the OS.
+#[no_mangle]
+pub extern "C" fn _start() -> ! {
+  loop {}
+}
