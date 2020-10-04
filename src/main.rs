@@ -2,7 +2,10 @@
 #![no_main]
 
 /// Utils module
-mod utils;
+pub mod utils;
+
+/// VGA module
+pub mod vga;
 
 // ===== Imports =====
 #[allow(unused_imports)]
