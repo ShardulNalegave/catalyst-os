@@ -25,7 +25,7 @@ pub enum Color {
 /// # Color Code
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(transparent)]
-struct ColorCode(u8);
+pub struct ColorCode(u8);
 
 impl ColorCode {
     /// ## Constructor
