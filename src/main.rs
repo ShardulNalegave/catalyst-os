@@ -10,22 +10,23 @@ pub mod vga;
 // ===== Imports =====
 #[allow(unused_imports)]
 use utils::panic::panic;
+use vga::VGAWriter;
+use crate::vga::{ColorCode, Color, Buffer};
 // ===================
-
-static HELLO: &[u8] = b"Hello World!";
 
 /// # Start Function
 /// Entry-Point for the OS.
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-  let vga_buffer = 0xb8000 as *mut u8;
-
-  for (i, &byte) in HELLO.iter().enumerate() {
-    unsafe {
-      *vga_buffer.offset(i as isize * 2) = byte;
-      *vga_buffer.offset(i as isize * 2 + 1) = 0xb;
-    }
-  }
-
+  print_test();
   loop {}
+}
+
+fn print_test() {
+  let mut writer = VGAWriter {
+    column_position: 0,
+    color_code: ColorCode::new(Color::Yellow, Color::Black),
+    buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+  };
+  writer.write_string("Hello, World! How are you?");
 }
