@@ -9,10 +9,12 @@ pub const BUFFER_WIDTH: usize = 80;
 /// # VGA Character
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(C)]
-struct VGAChar {
-    ascii_character: u8,
-    color_code: ColorCode,
+pub struct VGAChar {
+    pub char: u8,
+    pub color_code: ColorCode,
 }
 
 /// # The VGA Buffer
-pub struct Buffer {}
+pub struct Buffer {
+    pub chars: [[VGAChar; BUFFER_WIDTH]; BUFFER_HEIGHT],
+}
