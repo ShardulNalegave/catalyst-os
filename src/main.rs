@@ -1,11 +1,16 @@
 #![no_std]
 #![no_main]
+#![feature(custom_test_frameworks)]
+#![test_runner(crate::test::runner)]
 
 /// Utils module
 pub mod utils;
 
 /// VGA module
 pub mod vga;
+
+/// Tests module
+pub mod tests;
 
 // ===== Imports =====
 #[allow(unused_imports)]
