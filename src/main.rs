@@ -16,6 +16,8 @@ use utils::panic::panic;
 /// Entry-Point for the OS.
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-  vga::WRITER.lock().write_string("Hello, World! How are you?");
+  vga_println!("Hello, World!");
+  vga_print!("How are you?");
+  vga_println!(" I am fine!");
   loop {}
 }

@@ -8,7 +8,11 @@ mod buffer;
 pub use buffer::*;
 use crate::vga::VGAChar;
 
+/// Macros module
+pub mod macros;
+
 // ===== Imports =====
+use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
 // ===================
@@ -32,7 +36,27 @@ pub struct VGAWriter {
 
 impl VGAWriter {
     /// ## New Line
-    fn new_line(&mut self) { todo!() }
+    fn new_line(&mut self) {
+        for row in 1..BUFFER_HEIGHT {
+            for col in 0..BUFFER_WIDTH {
+                let character = self.buffer.chars[row][col].read();
+                self.buffer.chars[row - 1][col].write(character);
+            }
+        }
+        self.clear_row(BUFFER_HEIGHT - 1);
+        self.column_position = 0;
+    }
+
+    /// ## Clear row
+    fn clear_row(&mut self, row: usize) {
+        let blank = VGAChar {
+            char: b' ',
+            color_code: self.color_code,
+        };
+        for col in 0..BUFFER_WIDTH {
+            self.buffer.chars[row][col].write(blank);
+        }
+    }
 
     /// ## Write (Byte)
     pub fn write_byte(&mut self, byte: u8) {
@@ -68,4 +92,18 @@ impl VGAWriter {
 
         }
     }
+}
+
+/// Rust formatting support for VGAWriter
+impl fmt::Write for VGAWriter {
+    fn write_str(&mut self, s: &str) -> fmt::Result {
+        self.write_string(s);
+        Ok(())
+    }
+}
+
+#[doc(hidden)]
+pub fn _print(args: fmt::Arguments) {
+    use core::fmt::Write;
+    WRITER.lock().write_fmt(args).unwrap();
 }
