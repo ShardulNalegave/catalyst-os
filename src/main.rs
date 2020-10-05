@@ -19,5 +19,5 @@ pub extern "C" fn _start() -> ! {
   vga_println!("Hello, World!");
   vga_print!("How are you?");
   vga_println!(" I am fine!");
-  loop {}
+  panic!("Some panic message");
 }
