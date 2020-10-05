@@ -1,5 +1,6 @@
 
 // ===== Imports =====
+use volatile::Volatile;
 use crate::vga::ColorCode;
 // ===================
 
@@ -16,5 +17,5 @@ pub struct VGAChar {
 
 /// # The VGA Buffer
 pub struct Buffer {
-    pub chars: [[VGAChar; BUFFER_WIDTH]; BUFFER_HEIGHT],
+    pub chars: [[Volatile<VGAChar>; BUFFER_WIDTH]; BUFFER_HEIGHT],
 }

@@ -8,6 +8,20 @@ mod buffer;
 pub use buffer::*;
 use crate::vga::VGAChar;
 
+// ===== Imports =====
+use lazy_static::lazy_static;
+use spin::Mutex;
+// ===================
+
+lazy_static! {
+    /// Global Static Instance of VGAWriter
+    pub static ref WRITER: Mutex<VGAWriter> = Mutex::new(VGAWriter {
+        column_position: 0,
+        color_code: ColorCode::new(Color::Yellow, Color::Black),
+        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+    });
+}
+
 /// # VGA Writer
 /// Writes to the VGA Buffer
 pub struct VGAWriter {
@@ -33,10 +47,10 @@ impl VGAWriter {
                 let col = self.column_position;
 
                 let color_code = self.color_code;
-                self.buffer.chars[row][col] = VGAChar {
+                self.buffer.chars[row][col].write(VGAChar {
                     char: byte,
                     color_code,
-                };
+                });
                 self.column_position += 1;
             },
         }
