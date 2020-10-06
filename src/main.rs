@@ -14,6 +14,7 @@ pub mod vga;
 pub mod qemu;
 
 /// Tests module
+#[cfg(test)]
 pub mod tests;
 
 // ===== Imports =====
