@@ -10,9 +10,6 @@ pub mod utils;
 /// VGA module
 pub mod vga;
 
-/// QEMU module
-pub mod qemu;
-
 /// Tests module
 #[cfg(test)]
 pub mod tests;
