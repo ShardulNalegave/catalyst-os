@@ -10,6 +10,9 @@ pub mod utils;
 /// VGA module
 pub mod vga;
 
+/// QEMU module
+pub mod qemu;
+
 /// Tests module
 pub mod tests;
 
