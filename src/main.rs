@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 #![feature(custom_test_frameworks)]
-#![test_runner(crate::test::runner)]
+#![test_runner(crate::tests::runner)]
 
 /// Utils module
 pub mod utils;
