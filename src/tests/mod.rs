@@ -14,7 +14,9 @@ pub fn runner(tests: &[&dyn Fn()]) {
 
 #[test_case]
 fn trivial_test() {
+    serial1_print!("Trivial Test: ");
     vga_print!("Trivial Test: ");
     assert_eq!(1, 1);
+    serial1_println!("[OK]");
     vga_println!("[OK]");
 }

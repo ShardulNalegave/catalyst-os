@@ -10,6 +10,9 @@ pub mod utils;
 /// VGA module
 pub mod vga;
 
+/// Serial module
+pub mod serial;
+
 /// Tests module
 #[cfg(test)]
 pub mod tests;
