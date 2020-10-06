@@ -2,6 +2,7 @@
 #![no_main]
 #![feature(custom_test_frameworks)]
 #![test_runner(crate::tests::runner)]
+#![reexport_test_harness_main = "test_main"]
 
 /// Utils module
 pub mod utils;
@@ -24,5 +25,9 @@ pub extern "C" fn _start() -> ! {
   vga_println!("Hello, World!");
   vga_print!("How are you?");
   vga_println!(" I am fine!");
-  panic!("Some panic message");
+
+  #[cfg(test)]
+  test_main();
+
+  loop {}
 }
