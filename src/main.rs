@@ -31,6 +31,11 @@ pub extern "C" fn _start() -> ! {
   vga_print!("How are you?");
   vga_println!(" I am fine!");
 
+  // trigger a page fault
+  unsafe {
+    *(0xdeadbeef as *mut u64) = 42;
+  };
+
   loop {}
 }
 
