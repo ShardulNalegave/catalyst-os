@@ -20,9 +20,22 @@ use utils::panic::panic;
 /// Entry-Point for the OS.
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+  // Initialize all modules
+  init();
+
   vga_println!("Hello, World!");
+
+  // throw a breakpoint exception
+  x86_64::instructions::interrupts::int3();
+
   vga_print!("How are you?");
   vga_println!(" I am fine!");
 
   loop {}
+}
+
+/// # Init
+/// All modules are initialized here
+fn init() {
+  interrupts::load_idt();
 }
