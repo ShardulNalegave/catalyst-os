@@ -7,6 +7,9 @@ pub mod utils;
 /// VGA module
 pub mod vga;
 
+/// Interrupts module
+pub mod interrupts;
+
 // ===== Imports =====
 #[allow(unused_imports)]
 use utils::panic::panic;
