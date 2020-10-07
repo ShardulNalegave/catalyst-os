@@ -1,6 +1,6 @@
 
-<div style="text-align: center;">
+<center>
     <h1>Catalyst OS</h1>
-</div>
+</center>
 
 ![Hello, World!](images/hello_world.png)
