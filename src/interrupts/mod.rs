@@ -30,6 +30,10 @@ lazy_static! {
         unsafe { idt.double_fault.set_handler_fn(double_fault::double_fault_handler)
             .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX); }
 
+        // Timer interrupt
+        idt[hardware::PICSInterruptIndex::Timer.as_usize()]
+            .set_handler_fn(hardware::timer::timer_interrupt_handler);
+
         // Return the idt
         idt
     };
@@ -40,4 +44,5 @@ pub fn load_idt() {
     gdt::init();
     IDT.load();
     unsafe { hardware::PICS.lock().initialize(); };
+    x86_64::instructions::interrupts::enable();
 }
