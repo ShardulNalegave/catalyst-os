@@ -1,4 +1,7 @@
 
+/// GDT module
+pub mod gdt;
+
 /// Breakpoint Exception module
 pub mod breakpoint;
 
