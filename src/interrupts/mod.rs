@@ -1,6 +1,8 @@
 
 /// GDT module
 pub mod gdt;
+/// GDT
+pub use gdt::GDT;
 
 /// Breakpoint Exception module
 pub mod breakpoint;
@@ -26,5 +28,6 @@ lazy_static! {
 
 /// # Load IDT
 pub fn load_idt() {
+    GDT.load();
     IDT.load();
 }

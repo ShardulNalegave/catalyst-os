@@ -2,6 +2,7 @@
 // ===== Imports =====
 use x86_64::VirtAddr;
 use x86_64::structures::tss::TaskStateSegment;
+use x86_64::structures::gdt::{GlobalDescriptorTable, Descriptor};
 use lazy_static::lazy_static;
 // ===================
 
@@ -10,7 +11,7 @@ pub const DOUBLE_FAULT_IST_INDEX: u16 = 0;
 lazy_static! {
     /// # TSS
     /// Creates a static TaskStateSegment lazily
-    static ref TSS: TaskStateSegment = {
+    pub static ref TSS: TaskStateSegment = {
         let mut tss = TaskStateSegment::new();
         tss.interrupt_stack_table[DOUBLE_FAULT_IST_INDEX as usize] = {
             const STACK_SIZE: usize = 4096 * 5;
@@ -21,5 +22,16 @@ lazy_static! {
             stack_end
         };
         tss
+    };
+}
+
+lazy_static! {
+    /// # GDT
+    /// Creates a static GlobalDescriptorTable lazily
+    pub static ref GDT: GlobalDescriptorTable = {
+        let mut gdt = GlobalDescriptorTable::new();
+        gdt.add_entry(Descriptor::kernel_code_segment());
+        gdt.add_entry(Descriptor::tss_segment(&TSS));
+        gdt
     };
 }
