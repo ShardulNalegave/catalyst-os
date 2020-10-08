@@ -24,26 +24,10 @@ pub extern "C" fn _start() -> ! {
   init();
 
   vga_println!("Hello, World!");
-
-  // // throw a breakpoint exception
-  // x86_64::instructions::interrupts::int3();
-
   vga_print!("How are you?");
   vga_println!(" I am fine!");
 
-  // // trigger a page fault
-  // unsafe {
-  //   *(0xdeadbeef as *mut u64) = 42;
-  // };
-
-  #[allow(unconditional_recursion)]
-  fn stack_overflow() {
-    stack_overflow(); // for each recursion, the return address is pushed
-  }
-
-  // trigger a stack overflow
-  stack_overflow();
-
+  vga_println!("It did not crash!!");
   loop {}
 }
 

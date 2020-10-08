@@ -4,6 +4,9 @@ pub mod gdt;
 /// GDT
 pub use gdt::GDT;
 
+/// Hardware module
+pub mod hardware;
+
 /// Breakpoint Exception module
 pub mod breakpoint;
 
@@ -36,4 +39,5 @@ lazy_static! {
 pub fn load_idt() {
     gdt::init();
     IDT.load();
+    unsafe { hardware::PICS.lock().initialize(); };
 }
