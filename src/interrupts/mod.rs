@@ -20,14 +20,20 @@ lazy_static! {
     /// Initializes the Interrupt Descriptor Table and sets the handlers.
     static ref IDT: InterruptDescriptorTable = {
         let mut idt = InterruptDescriptorTable::new();
+        // Breakpoint exception
         idt.breakpoint.set_handler_fn(breakpoint::breakpoint_handler);
-        idt.double_fault.set_handler_fn(double_fault::double_fault_handler);
+
+        // Double-Fault exception
+        unsafe { idt.double_fault.set_handler_fn(double_fault::double_fault_handler)
+            .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX); }
+
+        // Return the idt
         idt
     };
 }
 
 /// # Load IDT
 pub fn load_idt() {
-    GDT.load();
+    gdt::init();
     IDT.load();
 }
