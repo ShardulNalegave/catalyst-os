@@ -28,7 +28,8 @@ pub extern "C" fn _start() -> ! {
   vga_println!(" I am fine!");
 
   vga_println!("It did not crash!!");
-  loop {}
+
+  utils::halt_loop();
 }
 
 /// # Init

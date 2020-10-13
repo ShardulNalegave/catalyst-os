@@ -8,5 +8,5 @@ use core::panic::PanicInfo;
 #[panic_handler]
 pub fn panic(info: &PanicInfo) -> ! {
   vga_println!("{}", info);
-  loop {}
+  crate::utils::halt_loop();
 }
