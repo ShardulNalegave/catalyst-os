@@ -2,6 +2,9 @@
 /// Timer Interrupt module
 pub mod timer;
 
+/// Keyboard module
+pub mod keyboard;
+
 // ===== Imports =====
 use pic8259_simple::ChainedPics;
 use spin;
@@ -22,6 +25,7 @@ pub static PICS: spin::Mutex<ChainedPics> =
 #[repr(u8)]
 pub enum PICSInterruptIndex {
     Timer = PIC_1_OFFSET,
+    Keyboard,
 }
 
 impl PICSInterruptIndex {

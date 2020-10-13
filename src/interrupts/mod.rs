@@ -34,6 +34,10 @@ lazy_static! {
         idt[hardware::PICSInterruptIndex::Timer.as_usize()]
             .set_handler_fn(hardware::timer::timer_interrupt_handler);
 
+        // Keyboard interrupt
+        idt[hardware::PICSInterruptIndex::Keyboard.as_usize()]
+            .set_handler_fn(hardware::keyboard::keyboard_interrupt_handler);
+
         // Return the idt
         idt
     };
