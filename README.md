@@ -1,9 +1,10 @@
 
 # Catalyst OS
+A toy OS in rust.
 ![Hello, World!](images/hello_world.png)
 ---
 
-## Installation and Usage
+## Usage
 Currently, there are no prebuilt binaries.
 Instead, you can build it from the source.
 
