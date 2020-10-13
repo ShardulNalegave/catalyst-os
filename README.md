@@ -13,6 +13,8 @@ Instead, you can build it from the source.
 git clone https://github.com/ShardulNalegave/catalyst-os.git catalyst
 cd catalyst
 
+rustup override set nightly
+
 # To build the kernel:-
 make build_kernel
 
