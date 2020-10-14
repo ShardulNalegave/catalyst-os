@@ -1,6 +1,5 @@
 
 // ===== Imports =====
-use crate::*;
 use x86_64::structures::idt::InterruptStackFrame;
 // ===================
 

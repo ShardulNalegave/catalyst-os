@@ -1,6 +1,5 @@
 
 // ===== Imports =====
-use crate::*;
 use crate::interrupts::hardware::{PICS, PICSInterruptIndex};
 use x86_64::structures::idt::InterruptStackFrame;
 use pc_keyboard::{layouts, DecodedKey, HandleControl, Keyboard, ScancodeSet1};
