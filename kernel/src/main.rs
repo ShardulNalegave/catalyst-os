@@ -23,11 +23,11 @@ pub extern "C" fn _start() -> ! {
   // Initialize all modules
   init();
 
-  vga_println!("Hello, World!");
-  vga_print!("How are you?");
-  vga_println!(" I am fine!");
+  vga::println!("Hello, World!");
+  vga::print!("How are you?");
+  vga::println!(" I am fine!");
 
-  vga_println!("It did not crash!!");
+  vga::println!("It did not crash!!");
 
   utils::halt_loop();
 }

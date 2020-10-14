@@ -82,6 +82,12 @@ dependencies = [
 [[package]]
 name = "vga"
 version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "spin",
+ "volatile",
+ "x86_64",
+]
 
 [[package]]
 name = "volatile"

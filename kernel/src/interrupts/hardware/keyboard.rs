@@ -21,8 +21,8 @@ lazy_static! {
 pub extern "x86-interrupt" fn keyboard_interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
     match get_key() {
         Some(key) => match key {
-            DecodedKey::Unicode(ch) => vga_print!("{}", ch),
-            DecodedKey::RawKey(key) => vga_print!("{:?}", key),
+            DecodedKey::Unicode(ch) => vga::print!("{}", ch),
+            DecodedKey::RawKey(key) => vga::print!("{:?}", key),
         },
         None => (),
     }

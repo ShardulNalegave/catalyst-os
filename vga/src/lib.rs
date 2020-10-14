@@ -1,3 +1,4 @@
+#![no_std]
 
 /// Color module
 mod color;
