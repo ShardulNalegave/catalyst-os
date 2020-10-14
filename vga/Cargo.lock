@@ -13,33 +13,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 
 [[package]]
-name = "bootloader"
-version = "0.9.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83732ad599045a978528e4311539fdcb20c30e406b66d1d08cd4089d4fc8d90f"
-
-[[package]]
-name = "catalyst"
-version = "0.1.0"
-dependencies = [
- "bootloader",
- "lazy_static",
- "pc-keyboard",
- "pic8259_simple",
- "spin",
- "uart_16550",
- "vga",
- "volatile",
- "x86_64",
-]
-
-[[package]]
-name = "cpuio"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d531514efb06912141fa65967447de805691b685a7565c87d1765afe34a98aa7"
-
-[[package]]
 name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -49,39 +22,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "pc-keyboard"
-version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c6f2d937e3b8d63449b01401e2bae4041bc9dd1129c2e3e0d239407cf6635ac"
-
-[[package]]
-name = "pic8259_simple"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af2a5497fb8e59bf8015f67b7dff238d75ef445e03f23edac24ac3a8f09be952"
-dependencies = [
- "cpuio",
-]
-
-[[package]]
 name = "spin"
 version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
 
 [[package]]
-name = "uart_16550"
-version = "0.2.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "afb00b16a4c8acbfc4eb8cfeda1f9c0507c7e87c6563edce64a236af93acf70c"
-dependencies = [
- "bitflags",
- "x86_64",
-]
-
-[[package]]
 name = "vga"
 version = "0.1.0"
+dependencies = [
+ "lazy_static",
+ "spin",
+ "volatile",
+ "x86_64",
+]
 
 [[package]]
 name = "volatile"

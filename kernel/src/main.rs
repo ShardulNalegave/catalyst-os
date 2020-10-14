@@ -6,7 +6,7 @@
 pub mod utils;
 
 /// VGA module
-pub mod vga;
+// pub mod vga;
 
 /// Interrupts module
 pub mod interrupts;
