@@ -1,12 +1,13 @@
 
 # Catalyst OS
 A toy OS in rust.
+
 ![Hello, World!](images/hello_world.png)
 ---
 
 ## Usage
 Currently, there are no prebuilt binaries.
-Instead, you can build it from the source.
+Instead, you can build and run it from source code.
 
 ```bash
 
@@ -17,10 +18,12 @@ cd catalyst
 rustup override set nightly
 
 # To build the kernel:-
-make build_kernel
+cd kernel
+make build
 
-# To run the kernel (Note this will rebuild the kernel):-
-make run_kernel
+# To run the kernel (Note: this will rebuild the kernel):-
+cd kernel
+make run
 
 ```
 
