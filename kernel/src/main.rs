@@ -1,6 +1,9 @@
 #![no_std]
 #![no_main]
 #![feature(abi_x86_interrupt)]
+#![feature(custom_test_frameworks)]
+#![test_runner(shared::tests::runner)]
+#![reexport_test_harness_main = "tests_main"]
 
 /// Utils module
 pub mod utils;
@@ -20,20 +23,23 @@ bootloader::entry_point!(main);
 /// # Main Function
 /// Entry-Point for the OS.
 fn main(_boot_info: &'static BootInfo) -> ! {
-  // Initialize all modules
-  init();
+    // Initialize all modules
+    init();
 
-  vga::println!("Hello, World!");
-  vga::print!("How are you?");
-  vga::println!(" I am fine!");
+    vga::println!("Hello, World!");
+    vga::print!("How are you?");
+    vga::println!(" I am fine!");
 
-  vga::println!("It did not crash!!");
+    vga::println!("It did not crash!!");
 
-  utils::halt_loop();
+    #[cfg(test)]
+    tests_main();
+
+    utils::halt_loop();
 }
 
 /// # Init
 /// All modules are initialized here
 fn init() {
-  interrupts::load_idt();
+    interrupts::load_idt();
 }
