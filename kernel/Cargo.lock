@@ -27,6 +27,7 @@ dependencies = [
  "paging",
  "pc-keyboard",
  "pic8259_simple",
+ "shared",
  "spin",
  "vga",
  "x86_64",
@@ -65,6 +66,10 @@ checksum = "af2a5497fb8e59bf8015f67b7dff238d75ef445e03f23edac24ac3a8f09be952"
 dependencies = [
  "cpuio",
 ]
+
+[[package]]
+name = "shared"
+version = "0.1.0"
 
 [[package]]
 name = "spin"

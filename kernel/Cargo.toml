@@ -7,6 +7,7 @@ edition = "2018"
 [dependencies]
 vga = { path = "../vga" }
 paging = { path = "../paging" }
+shared = { path = "../shared" }
 bootloader = { version = "0.9.8", features = ["map_physical_memory"] }
 spin = "0.5.2"
 x86_64 = "0.12.1"
