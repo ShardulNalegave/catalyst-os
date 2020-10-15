@@ -11,12 +11,15 @@ pub mod interrupts;
 // ===== Imports =====
 #[allow(unused_imports)]
 use utils::panic::panic;
+use bootloader::BootInfo;
 // ===================
 
-/// # Start Function
+// Declare main function as entry-point
+bootloader::entry_point!(main);
+
+/// # Main Function
 /// Entry-Point for the OS.
-#[no_mangle]
-pub extern "C" fn _start() -> ! {
+fn main(_boot_info: &'static BootInfo) -> ! {
   // Initialize all modules
   init();
 

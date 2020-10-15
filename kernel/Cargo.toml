@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 vga = { path = "../vga" }
 paging = { path = "../paging" }
-bootloader = "0.9.8"
+bootloader = { version = "0.9.8", features = ["map_physical_memory"] }
 spin = "0.5.2"
 x86_64 = "0.12.1"
 pic8259_simple = "0.2.0"
