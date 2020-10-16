@@ -38,6 +38,11 @@ fn main(_boot_info: &'static BootInfo) -> ! {
     utils::halt_loop();
 }
 
+#[test_case]
+fn trivial_assertion() {
+    assert_eq!(1, 1);
+}
+
 /// # Init
 /// All modules are initialized here
 fn init() {
