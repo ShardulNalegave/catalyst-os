@@ -1,11 +1,16 @@
 
+// ===== Imports =====
+use crate::qemu::{self, QemuExitCode};
+// ===================
+
 /// # Tests Runner
 /// Runs all the defined tests.
 pub fn runner(tests: &[&dyn Testable]) {
-    vga::println!("Running {} tests.", tests.len());
+    crate::serial_println!("Running {} tests.", tests.len());
     for test in tests {
         test.run();
     }
+    qemu::exit(QemuExitCode::Success);
 }
 
 /// # Testable Trait
@@ -16,8 +21,8 @@ pub trait Testable {
 
 impl<T: Fn()> Testable for T {
     fn run(&self) {
-        vga::print!("{} =>", core::any::type_name::<T>());
+        crate::serial_print!("{} =>", core::any::type_name::<T>());
         self();
-        vga::println!(" [OK]");
+        crate::serial_println!(" [OK]");
     }
 }

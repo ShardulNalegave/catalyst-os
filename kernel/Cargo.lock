@@ -75,6 +75,7 @@ dependencies = [
  "spin",
  "uart_16550",
  "vga",
+ "x86_64",
 ]
 
 [[package]]
