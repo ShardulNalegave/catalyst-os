@@ -1,4 +1,5 @@
 #![no_std]
+#![feature(custom_test_frameworks)]
 
 /// Color module
 mod color;

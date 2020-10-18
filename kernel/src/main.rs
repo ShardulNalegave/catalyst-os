@@ -11,6 +11,10 @@ pub mod utils;
 /// Interrupts module
 pub mod interrupts;
 
+/// Tests module
+#[cfg(test)]
+pub mod tests;
+
 // ===== Imports =====
 #[allow(unused_imports)]
 use utils::panic::panic;
@@ -36,11 +40,6 @@ fn main(_boot_info: &'static BootInfo) -> ! {
     tests_main();
 
     utils::halt_loop();
-}
-
-#[test_case]
-fn trivial_assertion() {
-    assert_eq!(1, 1);
 }
 
 /// # Init
