@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 vga = { path = "../vga" }
+uart_16550 = "0.2.0"
