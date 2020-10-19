@@ -5,3 +5,5 @@ authors = ["Shardul Nalegave <nalegaveshardul40@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+vga = { path = "../vga" }
+x86_64 = "0.12.1"
