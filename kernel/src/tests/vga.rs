@@ -18,7 +18,7 @@ fn test_println_many() {
 #[test_case]
 fn test_println_output() {
     use core::fmt::Write;
-    
+
     let s = "Some test string that fits on a single line";
     interrupts::without_interrupts(|| {
         let mut writer = vga::WRITER.lock();

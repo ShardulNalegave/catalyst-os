@@ -2,7 +2,7 @@
 #![no_main]
 #![feature(abi_x86_interrupt)]
 #![feature(custom_test_frameworks)]
-#![test_runner(shared::tests::runner)]
+#![test_runner(crate::tests::runner)]
 #![reexport_test_harness_main = "tests_main"]
 
 /// Utils module
