@@ -26,6 +26,9 @@ lazy_static! {
         // Breakpoint exception
         idt.breakpoint.set_handler_fn(breakpoint::breakpoint_handler);
 
+        // Page-Fault exception
+        idt.page_fault.set_handler_fn(paging::page_fault::page_fault_handler);
+
         // Double-Fault exception
         unsafe { idt.double_fault.set_handler_fn(double_fault::double_fault_handler)
             .set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX); }

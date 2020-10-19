@@ -5,8 +5,8 @@
 #![test_runner(crate::tests::runner)]
 #![reexport_test_harness_main = "tests_main"]
 
-/// Utils module
-pub mod utils;
+/// Panic module
+pub mod panic;
 
 /// Interrupts module
 pub mod interrupts;
@@ -16,8 +16,6 @@ pub mod interrupts;
 pub mod tests;
 
 // ===== Imports =====
-#[allow(unused_imports)]
-use utils::panic::panic;
 use bootloader::BootInfo;
 // ===================
 
@@ -34,12 +32,16 @@ fn main(_boot_info: &'static BootInfo) -> ! {
     vga::print!("How are you?");
     vga::println!(" I am fine!");
 
+    // Page-fault exception
+    let ptr = 0xdeadbeaf as *mut u32;
+    unsafe { *ptr = 42; }
+
     vga::println!("It did not crash!!");
 
     #[cfg(test)]
     tests_main();
 
-    utils::halt_loop();
+    shared::utils::halt_loop();
 }
 
 /// # Init

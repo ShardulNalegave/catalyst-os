@@ -51,6 +51,11 @@ dependencies = [
 [[package]]
 name = "paging"
 version = "0.1.0"
+dependencies = [
+ "shared",
+ "vga",
+ "x86_64",
+]
 
 [[package]]
 name = "pc-keyboard"

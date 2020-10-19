@@ -6,4 +6,5 @@ edition = "2018"
 
 [dependencies]
 vga = { path = "../vga" }
+shared = { path = "../shared" }
 x86_64 = "0.12.1"

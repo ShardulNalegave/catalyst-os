@@ -7,5 +7,5 @@ use core::panic::PanicInfo;
 #[panic_handler]
 pub fn panic(info: &PanicInfo) -> ! {
   vga::println!("{}", info);
-  crate::utils::halt_loop();
+  shared::utils::halt_loop();
 }
