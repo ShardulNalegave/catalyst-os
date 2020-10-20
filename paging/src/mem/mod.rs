@@ -1,16 +1,20 @@
 
-/// Translate module
-pub mod translate;
-
 // ===== Imports =====
 use x86_64::VirtAddr;
-use x86_64::structures::paging::{PageTable};
+use x86_64::structures::paging::{PageTable, OffsetPageTable};
 use x86_64::registers::control::Cr3;
 // ===================
 
+/// # Init
+/// Initializes a new `OffsetPageTable`. Should be called only once.
+pub unsafe fn init(physical_memory_offset: VirtAddr) -> OffsetPageTable<'static> {
+    let lev4_page_table = active_level_4_page_table(physical_memory_offset);
+    OffsetPageTable::new(lev4_page_table, physical_memory_offset)
+}
+
 /// # Active Level-4 Page Table
 /// Returns a mutable reference to the currently in use level-4 page table.
-pub unsafe fn active_level_4_page_table(
+unsafe fn active_level_4_page_table(
     physical_memory_offset: VirtAddr
 ) -> &'static mut PageTable {
     // The Cr3 register contains the address for level 4 page table
