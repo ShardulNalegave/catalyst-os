@@ -17,6 +17,7 @@ pub mod tests;
 
 // ===== Imports =====
 use bootloader::BootInfo;
+use x86_64::VirtAddr;
 // ===================
 
 // Declare main function as entry-point
@@ -24,7 +25,7 @@ bootloader::entry_point!(main);
 
 /// # Main Function
 /// Entry-Point for the OS.
-fn main(_boot_info: &'static BootInfo) -> ! {
+fn main(boot_info: &'static BootInfo) -> ! {
     // Initialize all modules
     init();
 
@@ -32,9 +33,13 @@ fn main(_boot_info: &'static BootInfo) -> ! {
     vga::print!("How are you?");
     vga::println!(" I am fine!");
 
-    // Page-fault exception
-    let ptr = 0xdeadbeaf as *mut u32;
-    unsafe { *ptr = 42; }
+    let physical_memory_offset = VirtAddr::new(boot_info.physical_memory_offset);
+    let lev4_page_table = unsafe { paging::mem::active_level_4_page_table(physical_memory_offset) };
+    for (i, entry) in lev4_page_table.iter().enumerate() {
+        if !entry.is_unused() {
+            vga::println!("Level-4 Page Table entry {}: {:?}", i, entry);
+        }
+    }
 
     vga::println!("It did not crash!!");
 
