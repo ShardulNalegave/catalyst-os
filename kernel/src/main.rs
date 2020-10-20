@@ -33,11 +33,26 @@ fn main(boot_info: &'static BootInfo) -> ! {
     vga::print!("How are you?");
     vga::println!(" I am fine!");
 
-    let physical_memory_offset = VirtAddr::new(boot_info.physical_memory_offset);
-    let lev4_page_table = unsafe { paging::mem::active_level_4_page_table(physical_memory_offset) };
-    for (i, entry) in lev4_page_table.iter().enumerate() {
-        if !entry.is_unused() {
-            vga::println!("Level-4 Page Table entry {}: {:?}", i, entry);
+    let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
+    let addresses = [
+        // the identity-mapped vga buffer page
+        0xb8000,
+        // some code page
+        0x201008,
+        // some stack page
+        0x0100_0020_1a10,
+        // virtual address mapped to physical address 0
+        boot_info.physical_memory_offset,
+    ];
+
+    for &address in &addresses {
+        let virt = VirtAddr::new(address);
+        let phys = paging::mem::translate::virt_to_phys(
+            virt,
+            phys_mem_offset,
+        );
+        if let Some(phys) = phys {
+            vga::println!("{:?} => {:?}", virt, phys);
         }
     }
 
