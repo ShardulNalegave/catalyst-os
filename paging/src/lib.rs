@@ -3,3 +3,6 @@
 
 /// Page-Fault Exception module
 pub mod page_fault;
+
+/// Memory module
+pub mod mem;
