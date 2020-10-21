@@ -9,8 +9,14 @@ use x86_64::registers::control::Cr3;
 // ===================
 
 /// # Init
-/// Initializes a new `OffsetPageTable`. Should be called only once.
-pub unsafe fn init(physical_memory_offset: VirtAddr) -> OffsetPageTable<'static> {
+/// Initializes a new memory `Manager`. Should be called only once.
+pub unsafe fn init(physical_memory_offset: VirtAddr) -> manager::Manager {
+    manager::Manager::create(create_offset_table(physical_memory_offset))
+}
+
+/// # Create Offset Table
+/// Creates a new `OffsetPageTable`. Should be called only once.
+unsafe fn create_offset_table(physical_memory_offset: VirtAddr) -> OffsetPageTable<'static> {
     let lev4_page_table = active_level_4_page_table(physical_memory_offset);
     OffsetPageTable::new(lev4_page_table, physical_memory_offset)
 }

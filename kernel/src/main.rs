@@ -18,7 +18,7 @@ pub mod tests;
 // ===== Imports =====
 use bootloader::BootInfo;
 use x86_64::VirtAddr;
-use x86_64::structures::paging::MapperAllSizes;
+use paging::mem::manager::Translator;
 // ===================
 
 // Declare main function as entry-point
@@ -35,7 +35,7 @@ fn main(boot_info: &'static BootInfo) -> ! {
     vga::println!(" I am fine!");
 
     let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
-    let mem_mapper = unsafe { paging::mem::init(phys_mem_offset) };
+    let mem_manager = unsafe { paging::mem::init(phys_mem_offset) };
     let addresses = [
         // the identity-mapped vga buffer page
         0xb8000,
@@ -49,7 +49,7 @@ fn main(boot_info: &'static BootInfo) -> ! {
 
     for &address in &addresses {
         let virt = VirtAddr::new(address);
-        let phys = mem_mapper.translate_addr(virt);
+        let phys = mem_manager.virt_to_phys(virt);
         if let Some(phys) = phys {
             vga::println!("{:?} => {:?}", virt, phys);
         }
