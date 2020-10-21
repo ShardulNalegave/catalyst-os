@@ -1,6 +1,15 @@
 
 // ===== Imports =====
-use x86_64::structures::paging::{Page, FrameAllocator, OffsetPageTable, Size4KiB, MapperAllSizes, PageSize};
+use x86_64::structures::paging::{
+    Page,
+    FrameAllocator,
+    OffsetPageTable,
+    MapperAllSizes,
+    PageSize,
+    PhysFrame,
+    PageTableFlags,
+    Mapper as Mapper_x86_64
+};
 use x86_64::{PhysAddr, VirtAddr};
 // ===================
 
@@ -15,7 +24,13 @@ pub trait Translator {
 /// Methods related to mapping.
 pub trait Mapper {
     /// Creates a mapping of a virtual page to a physical address using the provided frame allocator.
-    fn map<T: PageSize>(&mut self, page: Page, to: PhysAddr, allocator: &impl FrameAllocator<T>);
+    fn map<T: PageSize>(
+        &mut self,
+        page: Page<T>,
+        frame: PhysFrame<T>,
+        flags: PageTableFlags,
+        allocator: &mut impl FrameAllocator<T>,
+    );
 }
 
 // ===========================================================================================
@@ -40,7 +55,17 @@ impl Translator for Manager {
 }
 
 impl Mapper for Manager {
-    fn map<T: PageSize>(&mut self, _page: Page<Size4KiB>, _to: PhysAddr, _allocator: &impl FrameAllocator<T>) {
-        unimplemented!()
+    fn map<T: PageSize>(
+        &mut self,
+        page: Page<T>,
+        frame: PhysFrame<T>,
+        flags: PageTableFlags,
+        allocator: &mut impl FrameAllocator<T>,
+    ) {
+        let result = unsafe {
+            self.offset_page_table.map_to(page, frame, flags, allocator)
+        };
+        let flusher = result.expect("Failed to map");
+        flusher.flush();
     }
 }
