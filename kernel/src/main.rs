@@ -17,8 +17,9 @@ pub mod tests;
 
 // ===== Imports =====
 use bootloader::BootInfo;
-use x86_64::VirtAddr;
-use paging::mem::manager::Translator;
+use x86_64::{VirtAddr, PhysAddr};
+use paging::mem::manager::{Translator, MemMapper};
+use x86_64::structures::paging::{Page, Size4KiB, PhysFrame, PageTableFlags};
 // ===================
 
 // Declare main function as entry-point
@@ -35,25 +36,18 @@ fn main(boot_info: &'static BootInfo) -> ! {
     vga::println!(" I am fine!");
 
     let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
-    let mem_manager = unsafe { paging::mem::init(phys_mem_offset) };
-    let addresses = [
-        // the identity-mapped vga buffer page
-        0xb8000,
-        // some code page
-        0x201008,
-        // some stack page
-        0x0100_0020_1a10,
-        // virtual address mapped to physical address 0
-        boot_info.physical_memory_offset,
-    ];
+    let mut mem_manager = unsafe { paging::mem::init(phys_mem_offset) };
 
-    for &address in &addresses {
-        let virt = VirtAddr::new(address);
-        let phys = mem_manager.virt_to_phys(virt);
-        if let Some(phys) = phys {
-            vga::println!("{:?} => {:?}", virt, phys);
-        }
-    }
+    let page: Page<Size4KiB> = Page::containing_address(VirtAddr::new(0));
+    mem_manager.map(
+        page,
+        PhysFrame::containing_address(PhysAddr::new(0xb8000)),
+        PageTableFlags::PRESENT | PageTableFlags::WRITABLE,
+        &mut paging::mem::EmptyAllocator,
+    );
+
+    let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
+    unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e)};
 
     vga::println!("It did not crash!!");
 

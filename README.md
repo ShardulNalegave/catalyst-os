@@ -5,9 +5,11 @@ A toy OS in rust.
 ![Hello, World!](images/hello_world.png)
 ---
 
-## Usage
+## Setup
 Currently, there are no prebuilt binaries.
 Instead, you can build and run it from source code.
+
+**Note:** You need to have `qemu` installed.
 
 ```bash
 
@@ -15,15 +17,17 @@ Instead, you can build and run it from source code.
 git clone https://github.com/ShardulNalegave/catalyst-os.git catalyst
 cd catalyst
 
+cd kernel
 rustup override set nightly
 
 # To build the kernel:-
-cd kernel
-make build
+cargo build
 
 # To run the kernel (Note: this will rebuild the kernel):-
-cd kernel
-make run
+cargo run
+
+# To run the tests
+cargo test
 
 ```
 
