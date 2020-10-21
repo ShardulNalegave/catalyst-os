@@ -1,4 +1,7 @@
 
+/// Memory Manager module
+pub mod manager;
+
 // ===== Imports =====
 use x86_64::VirtAddr;
 use x86_64::structures::paging::{PageTable, OffsetPageTable};
