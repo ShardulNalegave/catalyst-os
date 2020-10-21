@@ -2,6 +2,10 @@
 /// Memory Manager module
 pub mod manager;
 
+/// Allocators module
+mod allocators;
+pub use allocators::*;
+
 // ===== Imports =====
 use x86_64::VirtAddr;
 use x86_64::structures::paging::{PageTable, OffsetPageTable};
