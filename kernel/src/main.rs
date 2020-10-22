@@ -18,8 +18,7 @@ pub mod tests;
 // ===== Imports =====
 use bootloader::BootInfo;
 use x86_64::{VirtAddr, PhysAddr};
-use paging::mem::manager::{Translator, MemMapper};
-use x86_64::structures::paging::{Page, Size4KiB, PhysFrame, PageTableFlags};
+use x86_64::structures::paging::{Page, Size4KiB, PhysFrame, PageTableFlags, Mapper};
 // ===================
 
 // Declare main function as entry-point
@@ -36,15 +35,19 @@ fn main(boot_info: &'static BootInfo) -> ! {
     vga::println!(" I am fine!");
 
     let phys_mem_offset = VirtAddr::new(boot_info.physical_memory_offset);
-    let mut mem_manager = unsafe { paging::mem::init(phys_mem_offset) };
+    let mut mem = unsafe { paging::mem::init(phys_mem_offset) };
 
     let page: Page<Size4KiB> = Page::containing_address(VirtAddr::new(0));
-    mem_manager.map(
-        page,
-        PhysFrame::containing_address(PhysAddr::new(0xb8000)),
-        PageTableFlags::PRESENT | PageTableFlags::WRITABLE,
-        &mut paging::mem::EmptyAllocator,
-    );
+    let map_res = unsafe {
+        mem.map_to(
+            page,
+            PhysFrame::containing_address(PhysAddr::new(0xb8000)),
+            PageTableFlags::PRESENT | PageTableFlags::WRITABLE,
+            &mut paging::mem::EmptyAllocator,
+        )
+    };
+
+    map_res.expect("Failed to map").flush();
 
     let page_ptr: *mut u64 = page.start_address().as_mut_ptr();
     unsafe { page_ptr.offset(400).write_volatile(0x_f021_f077_f065_f04e)};
